@@ -105,20 +105,19 @@ void glex__free_lexer(struct glex__lexer* lexer)
 	}
 }
 
-struct glex__token* glex__get_tok(struct glex__lexer* lexer, int type)
+struct glex__token* glex__get_tok(struct glex__lexer* lexer)
 {
-	if (lexer->cur_tok == NULL)
-		lexer->cur_tok = lexer->start;
-
 	struct glex__token* tok = lexer->cur_tok;
 	lexer->cur_tok = lexer->cur_tok->next;
 
-	for (int i = 0; i < lexer->token_defs_count; i++) if (lexer->token_defs[i].type == type &&
+	for (int i = 0; i < lexer->token_defs_count; i++) if (lexer->token_defs[i].type == tok->type &&
 			(lexer->token_defs[i].def_type == GLEX__TOKENDEF_TYPE__IGNORE_SEPARATOR ||
-			 lexer->token_defs[i].def_type == GLEX__TOKENDEF_TYPE__IGNORE))
-		return NULL;
+			lexer->token_defs[i].def_type == GLEX__TOKENDEF_TYPE__IGNORE)) {
+		tok = tok->next;
+		break;
+	}
 
-	return tok->type == type ? tok : NULL;
+	return tok;
 }
 
 void glex__add_tok(struct glex__lexer* lexer, struct glex__token* token)
@@ -126,12 +125,14 @@ void glex__add_tok(struct glex__lexer* lexer, struct glex__token* token)
 	if (!lexer || !token)
 		return;
 
-	if (lexer->start == NULL || lexer->end == NULL) {
+	if (lexer->start == NULL || lexer->end == NULL || lexer->cur_tok == NULL) {
 		lexer->start = token;
 		lexer->end   = token;
 
 		lexer->start->next = NULL;
 		lexer->start->prev = NULL;
+
+		lexer->cur_tok = lexer->start;
 
 	} else {
 		lexer->end->next = token;

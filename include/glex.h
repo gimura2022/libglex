@@ -58,7 +58,7 @@ void glex__set_token_defs(struct glex__lexer* lexer, size_t count, struct glex__
 bool glex__parse_string(struct glex__lexer* lexer, const char* str);
 void glex__free_lexer(struct glex__lexer* lexer);
 
-struct glex__token* glex__get_tok(struct glex__lexer* lexer, int type);
+struct glex__token* glex__get_tok(struct glex__lexer* lexer);
 void glex__add_tok(struct glex__lexer* lexer, struct glex__token* token);
 
 void glex__read_int(void** data, const char* text);
