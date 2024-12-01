@@ -189,7 +189,9 @@ static bool compare_token(struct glex__lexer* lexer, struct glex__token* tok)
 		tok->type = lexer->token_defs[j].type;
 		found     = true;
 
-		lexer->token_defs[j].reader(&tok->data, tok->text);
+		if (lexer->token_defs[j].reader != NULL)
+			lexer->token_defs[j].reader(&tok->data, tok->text);
+
 		break;
 	}
 
