@@ -1,2 +1,2 @@
-# gtemplate
-Template for my repositories
+# libglex
+Library for lexing tokens from string
