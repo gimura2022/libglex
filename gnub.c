@@ -12,9 +12,9 @@ static const char* cflags_deb = " -O0 -g -DDEBUG ";
 
 static const char* cppflags = " -I include ";
 
-static const char* ldflags = " -fPIC ";
+static const char* ldflags = " -fPIC -lglog ";
 
-static const char* libname = "gtemplate";
+static const char* libname = "glex";
 
 static char* cc = "cc";
 static char* ar = "ar";

@@ -1,0 +1,8 @@
+*.o
+*.out
+lib*.*
+
+gnub
+compile_commands.json
+
+.cache/
